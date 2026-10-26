@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#080817">
+  <title>Pour Alicia ♡</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="stars" aria-hidden="true"></div>
+  <div id="cursor-hearts" aria-hidden="true"></div>
+
+  <main class="panel">
+    <p class="eyebrow">✦ un petit coin rien qu'à toi ✦</p>
+    <h1>Un petit secret pour toi...</h1>
+    <p class="intro">Alicia, il y a quelque chose que j'ai envie de te dire du fond du cœur.</p>
+
+    <section id="message" class="message" aria-live="polite">
+      <p id="message-text">Prends ton temps, Alicia. Cet endroit a été préparé rien que pour toi, avec tout mon cœur. 💜</p>
+      <button id="next-message" class="button">Continuer ✦</button>
+    </section>
+
+    <section id="questionnaire" class="questionnaire hidden">
+      <h2>Quelques petites questions 💌</h2>
+      <form id="questions-form">
+        <fieldset>
+          <legend>Comment te sens-tu aujourd'hui ?</legend>
+          <label><input type="radio" name="journee" value="Bien" required> Bien</label>
+          <label><input type="radio" name="journee" value="Un peu fatiguée"> Un peu fatiguée</label>
+          <label><input type="radio" name="journee" value="Pas très bien"> Pas très bien</label>
+        </fieldset>
+        <fieldset>
+          <legend>Qu'est-ce qui t'a fait sourire aujourd'hui ?</legend>
+          <label><input type="radio" name="prefere" value="Un moment avec quelqu'un" required> Un moment avec quelqu'un</label>
+          <label><input type="radio" name="prefere" value="Un jeu ou une activité"> Un jeu ou une activité</label>
+          <label><input type="radio" name="prefere" value="Un autre moment"> Un autre moment</label>
+        </fieldset>
+        <label class="written-label" for="jeux">À quels jeux ou activités aimerais-tu qu'on fasse ensemble ?</label>
+        <textarea id="jeux" name="jeux" rows="3" placeholder="Tu peux écrire ici…"></textarea>
+        <label class="written-label" for="mot">Un petit mot pour moi ? 💜</label>
+        <textarea id="mot" name="mot" rows="3" placeholder="Ce que tu veux, comme tu veux…"></textarea>
+        <button class="button" type="submit">Préparer mes réponses ✦</button>
+      </form>
+      <div id="results" class="results hidden" aria-live="polite">
+        <p>Tes réponses sont prêtes, Alicia. Tu peux les copier et me les envoyer 💜</p>
+        <button id="copy-results" class="button" type="button">Copier les réponses</button>
+        <p id="copy-status" class="small"></p>
+      </div>
+    </section>
+    <p class="footer">fait avec amour, pour Alicia · ♡</p>
+  </main>
+  <script src="js/script.js"></script>
+</body>
+</html>
