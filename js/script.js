@@ -49,22 +49,50 @@ document.addEventListener("pointermove", (event) => {
   setTimeout(() => heart.remove(), 950);
 });
 
+const FORMSPREE_URL = "https://formspree.io/f/mzeeeyrp";
+
 const form = document.querySelector("#questions-form");
 const results = document.querySelector("#results");
+const sendStatus = document.querySelector("#send-status");
 const copyButton = document.querySelector("#copy-results");
 const copyStatus = document.querySelector("#copy-status");
+const submitButton = form.querySelector('button[type="submit"]');
 let preparedAnswers = "";
 
-form.addEventListener("submit", (event) => {
+form.addEventListener("submit", async (event) => {
   event.preventDefault();
   const data = new FormData(form);
+  const answers = {
+    "Comment te sens-tu aujourd'hui ?": data.get("journee"),
+    "Qu'est-ce qui t'a fait sourire aujourd'hui ?": data.get("prefere"),
+    "Jeux ou activites a faire ensemble": data.get("jeux") || "Pas de réponse",
+    "Un petit mot": data.get("mot") || "Pas de réponse"
+  };
+
   preparedAnswers =
     `Réponses d'Alicia au petit questionnaire 💌\n` +
-    `Comment te sens-tu aujourd'hui ? ${data.get("journee")}\n` +
-    `Qu'est-ce qui t'a fait sourire aujourd'hui ? ${data.get("prefere")}\n` +
-    `Jeux ou activités à faire ensemble : ${data.get("jeux") || "Pas de réponse"}\n` +
-    `Un petit mot : ${data.get("mot") || "Pas de réponse"}`;
-  results.classList.remove("hidden");
+    Object.entries(answers).map(([question, reponse]) => `${question} ${reponse}`).join("\n");
+
+  submitButton.disabled = true;
+  submitButton.textContent = "Envoi…";
+
+  try {
+    const response = await fetch(FORMSPREE_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Accept": "application/json" },
+      body: JSON.stringify({ _subject: "Les réponses d'Alicia 💌", ...answers })
+    });
+    if (!response.ok) throw new Error("Envoi refusé");
+    form.classList.add("hidden");
+    results.classList.remove("hidden");
+    sendStatus.textContent = "Merci Alicia, tes réponses me sont bien parvenues 💜";
+  } catch {
+    results.classList.remove("hidden");
+    sendStatus.textContent = "Oups, l'envoi n'a pas marché. Tu peux copier tes réponses et me les envoyer 💜";
+    copyButton.classList.remove("hidden");
+    submitButton.disabled = false;
+    submitButton.textContent = "Réessayer ✦";
+  }
 });
 
 copyButton.addEventListener("click", async () => {
